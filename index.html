@@ -1,51 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precious</title>
-    <style>
-        /* စာမျက်နှာအလယ်မှာ စာသားပေါ်ဖို့နဲ့ နောက်ခံအရောင်အတွက် ပြင်ဆင်ချက် */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #faf8f5; /* နူးညံ့တဲ့ Warm Cream ရောင်နောက်ခံ */
-            font-family: 'Georgia', serif; /* ခန့်ညားပြီး သေသပ်တဲ့ Font စတိုင် */
-            height: 100vh;
-            display: block;
-        }
-        
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            width: 100%;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You Are Precious</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@200;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        h1 {
-            font-size: 3.5rem; /* စာလုံးအကြီးကြီးပြရန် */
-            font-weight: 300;
-            color: #2c3e50; /* Slate Blue အရောင်ရင့် */
-            letter-spacing: 2px; /* စာလုံးတစ်လုံးချင်းစီ အကွာအဝေး */
-            margin: 0;
-            font-style: italic; /* စာလုံးစောင်းစတိုင် */
-            animation: fadeIn 2.5s ease-in-out; /* ဝက်ဘ်ဆိုက်ဖွင့်ဖွင့်ချင်း စာသားလေး မှိန်ရာကနေ လင်းလာမည့် Animation */
-        }
+    :root {
+      --gold:    #c9a96e;
+      --gold-lt: #e8d5b0;
+      --dark:    #0a0a0a;
+      --mid:     #1a1812;
+      --text:    #f5f0e8;
+    }
 
-        /* မှိန်ရာကနေ လင်းလာစေတဲ့ Animation ကုဒ် */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ── ambient gradient orb ── */
+    .orb {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,.18) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: breathe 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: .7; }
+      50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 1;  }
+    }
+
+    /* ── thin horizontal rules ── */
+    .rules {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    .rules::before,
+    .rules::after {
+      content: '';
+      position: absolute;
+      left: 8%; right: 8%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: .35;
+    }
+    .rules::before { top: calc(50% - 70px); }
+    .rules::after  { bottom: calc(50% - 70px); }
+
+    /* ── main stage ── */
+    .stage {
+      position: relative;
+      text-align: center;
+      padding: 0 2rem;
+      opacity: 0;
+      animation: fadeIn 2.4s ease forwards .6s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── eyebrow ── */
+    .eyebrow {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: clamp(.55rem, 1.2vw, .7rem);
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.2rem;
+      opacity: .8;
+    }
+
+    /* ── headline ── */
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      line-height: 1.05;
+      color: var(--text);
+      letter-spacing: .02em;
+      position: relative;
+    }
+
+    /* gold shimmer sweep */
+    h1 span {
+      background: linear-gradient(
+        100deg,
+        var(--text)   0%,
+        var(--gold-lt) 40%,
+        var(--gold)   50%,
+        var(--gold-lt) 60%,
+        var(--text)   100%
+      );
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 5s linear infinite 2s;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -50% center; }
+    }
+
+    /* ── decorative diamond ── */
+    .diamond {
+      margin: 2.4rem auto 0;
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: .7;
+    }
+
+    /* ── particle dust ── */
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .orb, h1 span { animation: none; }
+      .stage { animation: none; opacity: 1; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>You are Precious</h1>
-    </div>
+  <canvas id="dust"></canvas>
+  <div class="orb"></div>
+  <div class="rules"></div>
 
+  <div class="stage">
+    <span class="eyebrow">a reminder</span>
+    <h1><span>You Are Precious</span></h1>
+    <div class="diamond"></div>
+  </div>
+
+  <script>
+    /* ── floating dust particles ── */
+    const canvas = document.getElementById('dust');
+    const ctx    = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    for (let i = 0; i < 55; i++) {
+      particles.push({
+        x:    rand(0, 1) * innerWidth,
+        y:    rand(0, 1) * innerHeight,
+        r:    rand(.5, 1.8),
+        dx:   rand(-.15, .15),
+        dy:   rand(-.25, -.05),
+        alpha: rand(.1, .45)
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201,169,110,${p.alpha})`;
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.y < -5)             p.y = H + 5;
+        if (p.x < -5)             p.x = W + 5;
+        if (p.x > W + 5)          p.x = -5;
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
 </body>
 </html>
